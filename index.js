@@ -20,7 +20,6 @@ const LaunchRequestHandler = {
 const RiceIntentProgressHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-    
         return request.type === 'IntentRequest'
             && request.intent.name === 'RiceIntent'
             && request.dialogState !== 'COMPLETED';
