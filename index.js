@@ -1,6 +1,6 @@
 'use-strict';
 
-import { SkillBuilders } from "ask-sdk-core";
+const Core = require('ask-sdk-core');
 
 /* Intent Handlers */
 const LaunchRequestHandler = {
@@ -27,16 +27,14 @@ const RiceIntentProgressHandler = {
     handle(handlerInput) {
         const intent = handlerInput.requestEnvelope.request.intent;
         if (!intent.slots.Rice.value) {
-            const message = 'お米の種類を教えてください';
             return handlerInput.responseBuilder
-                .speak(message)
-                .withSimpleCard('お米のお水', message)
+                .addDelegateDirective(intent)
                 .getResponse();
         } else if (!intent.slots.Amount.value) {
-            const message = '炊きたいお米の量を合数で教えてください'
             return handlerInput.responseBuilder
-                .speak(message)
-                .withSimpleCard('お米のお水', message)
+                //.speak('くぁｗせｄｒｆｔｇｙふじこｌｐ；＠：「')
+                //.withSimpleCard('お米のお水', '@@@')
+                .addDelegateDirective(intent)
                 .getResponse();
         } else {
             const rice = intent.slots.Rice.value;
@@ -48,26 +46,6 @@ const RiceIntentProgressHandler = {
                 .withSimpleCard('お米のお水', message)
                 .getResponse();
         }
-    }
-};
-
-const RiceIntentCompleteHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest'
-            && request.intent.name === 'RiceIntent'
-            && request.dialogState === 'COMPLETED';
-    },
-    handle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        let rice = request.intent.slots.Rice.value;
-        let amount = request.intent.slots.Amount.value;
-        
-        const message = rice + 'の' + amount + '合の水の量は' + measureWater(rice, amount) + 'ccです';
-        return handlerInput.responseBuilder
-            .speak(message)
-            .withSimpleCard('お米のお水', message)
-            .getResponse();
     }
 };
 
@@ -108,7 +86,7 @@ const ErrorHandler = {
     },
     handle(handlerInput, error) {
         return handlerInput.responseBuilder
-            .speak('エラーになっているのでやめます')
+            .speak('スキルの実行中にエラーが発生しました。最初からやり直してください。')
             .getResponse();
     }
 };
@@ -125,8 +103,13 @@ function measureWater(rice, amount) {
     return Math.floor(result * Math.pow(10, 1)) / Math.pow(10, 1) * 100;
 };
 
-const skillBuilders = SkillBuilders.custom();
-export const handler = skillBuilders
-    .addRequestHandlers(LaunchRequestHandler, RiceIntentProgressHandler, HelpIntentHandler, ExitIntentHandler)
+const skillBuilders = Core.SkillBuilders.custom();
+exports.handler = skillBuilders
+    .addRequestHandlers(
+        LaunchRequestHandler,
+        RiceIntentProgressHandler,
+        HelpIntentHandler,
+        ExitIntentHandler
+    )
     .addErrorHandlers(ErrorHandler)
     .lambda();
