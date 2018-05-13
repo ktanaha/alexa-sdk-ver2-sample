@@ -1,3 +1,4 @@
+/* jshint esnext: true */
 'use-strict';
 
 const Core = require('ask-sdk-core');
@@ -32,15 +33,13 @@ const RiceIntentProgressHandler = {
                 .getResponse();
         } else if (!intent.slots.Amount.value) {
             return handlerInput.responseBuilder
-                //.speak('くぁｗせｄｒｆｔｇｙふじこｌｐ；＠：「')
-                //.withSimpleCard('お米のお水', '@@@')
                 .addDelegateDirective(intent)
                 .getResponse();
         } else {
             const rice = intent.slots.Rice.value;
             const amount = intent.slots.Amount.value;
 
-            const message = rice + 'の' + amount + '合の水の量は' + measureWater(rice, amount) + 'ccです';
+            const message = '${rice}の${amount}合の水の量は${measureWater(rice, amount)}ccです';
             return handlerInput.responseBuilder
                 .speak(message)
                 .withSimpleCard('お米のお水', message)
