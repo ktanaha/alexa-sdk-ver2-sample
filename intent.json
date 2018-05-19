@@ -22,9 +22,7 @@
                             "name": "Rice",
                             "type": "Rice",
                             "samples": [
-                                "もち米",
-                                "玄米",
-                                "白米"
+                                "{Rice}"
                             ]
                         },
                         {
@@ -36,6 +34,7 @@
                         }
                     ],
                     "samples": [
+                        "{Amount} 合",
                         "{Rice} を {Amount} 合",
                         "{Amount} 合 の {Rice}  の水",
                         "{Rice}  {Amount} 合の水",
@@ -89,21 +88,19 @@
                         {
                             "name": "Rice",
                             "type": "Rice",
-                            "confirmationRequired": true,
+                            "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "confirmation": "Confirm.Slot.388314087211.1219678238012",
-                                "elicitation": "Elicit.Slot.1484239627061.591602343204"
+                                "elicitation": "Elicit.Slot.77182074667.1170053838998"
                             }
                         },
                         {
                             "name": "Amount",
                             "type": "AMAZON.NUMBER",
-                            "confirmationRequired": true,
+                            "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "confirmation": "Confirm.Slot.388314087211.245966259411",
-                                "elicitation": "Elicit.Slot.388314087211.245966259411"
+                                "elicitation": "Elicit.Slot.77182074667.176532411174"
                             }
                         }
                     ]
@@ -112,38 +109,20 @@
         },
         "prompts": [
             {
-                "id": "Confirm.Slot.388314087211.1219678238012",
+                "id": "Elicit.Slot.77182074667.1170053838998",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "お米の種類は"
+                        "value": "お米の種類を教えてください"
                     }
                 ]
             },
             {
-                "id": "Elicit.Slot.388314087211.245966259411",
+                "id": "Elicit.Slot.77182074667.176532411174",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "お米の合数を教えてください"
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Slot.388314087211.245966259411",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "合数は"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1484239627061.591602343204",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "お米の種類は何ですか。白米、玄米、もち米から選択してください"
+                        "value": "お米の量を合数で教えてください"
                     }
                 ]
             }
