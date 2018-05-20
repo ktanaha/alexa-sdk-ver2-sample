@@ -35,14 +35,14 @@ const RiceHandler = {
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const intent = request.intent;
-        if (!intent) {
+        if (!intent.slots) {
             return handlerInput.responseBuilder
                 .speak(start_message)
                 .reprompt(start_message)
                 .getResponse();
         }
         //let rice: string = '白米胃';
-        const rice = '白米';
+        const rice = intent.slots.rice.value;
         const attributes = handlerInput.attributesManager.getSessionAttributes();
         if (!attributes.rice && !rice) {
             return handlerInput.responseBuilder
@@ -55,7 +55,7 @@ const RiceHandler = {
             handlerInput.attributesManager.setSessionAttributes(attributes);
         }
         //let amount: string = request.intent.slots.Amount.value;
-        const amount = '100';
+        const amount = intent.slots.amount.value;
         if (!attributes.amount && !amount) {
             return handlerInput.responseBuilder
                 .speak(amount_message)

@@ -30,14 +30,14 @@ const RiceHandler = {
     handle(handlerInput: Alexa.HandlerInput) {
         const request: IntentRequest = <IntentRequest> handlerInput.requestEnvelope.request;     
         const intent: Intent = request.intent;
-        if (!intent) {
+        if (!intent.slots) {
             return handlerInput.responseBuilder
                 .speak(start_message)
                 .reprompt(start_message)
                 .getResponse();
         }
         //let rice: string = '白米胃';
-        const rice = '白米';
+        const rice: string = intent.slots.rice.value;
         const attributes = handlerInput.attributesManager.getSessionAttributes();
         
         if (!attributes.rice && !rice) {
@@ -51,7 +51,7 @@ const RiceHandler = {
         }
         
         //let amount: string = request.intent.slots.Amount.value;
-        const amount = '100';
+        const amount: string = intent.slots.amount.value;
         if (!attributes.amount && !amount) {
             return handlerInput.responseBuilder
                 .speak(amount_message)
